@@ -1,4 +1,8 @@
-# 🔐 CareSync
+<h1 align="center">
+  <img width="50" height="50" alt="CareSync Logo" src="https://github.com/user-attachments/assets/d3b506b8-2605-45ae-ade7-21bdbe28829d" />
+  <br>
+  CareSync
+</h1>
 
 
 <p align="center">
