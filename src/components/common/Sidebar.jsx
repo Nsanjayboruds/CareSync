@@ -41,6 +41,7 @@ const doctorMenuItems = [
   },
   { name: "Patients", href: "/doctor/patients", icon: UserGroupIcon },
   { name: "Messages", href: "/doctor/messages", icon: ChatBubbleLeftRightIcon },
+  
   { name: "Settings", href: "/doctor/settings", icon: CogIcon },
 ];
 
@@ -123,9 +124,7 @@ export default function Sidebar() {
         {/* Header */}
         <div className="flex items-center gap-3 px-6 h-20 border-b border-subtle bg-surface/90 backdrop-blur">
           <div className="flex items-center justify-center h-12 w-12 rounded-full bg-primary-100/90 shadow-inner dark:bg-primary-900/30">
-            <span className="text-primary text-2xl font-bold">
-              🩺
-            </span>
+            <span className="text-primary text-2xl font-bold">🩺</span>
           </div>
           <div>
             <span className="block text-lg font-bold text-primary-700 tracking-wide dark:text-primary-300">

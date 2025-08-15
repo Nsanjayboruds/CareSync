@@ -62,6 +62,30 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
+  // Check for existing user session on app load
+  useEffect(() => {
+    const checkExistingSession = () => {
+      try {
+        const storedUser = localStorage.getItem("caresync_user");
+        console.log("Checking localStorage for user:", storedUser);
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          console.log("Found stored user:", userData);
+          setUser(userData);
+        } else {
+          console.log("No stored user found in localStorage");
+        }
+      } catch (error) {
+        console.error("Error checking existing session:", error);
+        localStorage.removeItem("caresync_user");
+      }
+      setLoading(false);
+    };
+
+    // Check localStorage first for immediate session restoration
+    checkExistingSession();
+  }, []);
+
   // Save dummy users in localStorage
   useEffect(() => {
     try {
@@ -71,8 +95,13 @@ export const AuthProvider = ({ children }) => {
     }
   }, [allUsers]);
 
-  // Firebase auth listener
+  // Firebase auth listener - only run if no local user exists
   useEffect(() => {
+    // If we already have a user from localStorage, don't run Firebase listener
+    if (user && !user.uid?.startsWith("firebase_")) {
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         await createUserDocumentIfNotExists(firebaseUser);
@@ -85,12 +114,15 @@ export const AuthProvider = ({ children }) => {
           role,
         });
       } else {
-        setUser(null);
+        // Only clear user if it's a Firebase user
+        if (user && user.uid?.startsWith("firebase_")) {
+          setUser(null);
+        }
       }
       setLoading(false);
     });
     return unsubscribe;
-  }, []);
+  }, [user]);
 
   // Login with Google (Firebase)
   const loginWithGoogle = async () => {
@@ -99,13 +131,15 @@ export const AuthProvider = ({ children }) => {
       const result = await signInWithGoogle();
       await createUserDocumentIfNotExists(result.user);
       const role = await fetchUserRole(result.user.uid);
-      setUser({
+      const firebaseUser = {
         uid: result.user.uid,
         email: result.user.email,
         displayName: result.user.displayName,
         photoURL: result.user.photoURL,
         role,
-      });
+      };
+      setUser(firebaseUser);
+      return { success: true, user: firebaseUser };
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
@@ -121,13 +155,19 @@ export const AuthProvider = ({ children }) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       const userToLogin = allUsers.find((u) => u.email === email);
       if (!userToLogin) throw new Error("User not found");
-      if (userToLogin.password !== password) throw new Error("Invalid password");
+      if (userToLogin.password !== password)
+        throw new Error("Invalid password");
       if (userToLogin.role !== role) throw new Error("Invalid role selected");
 
       const { password: _, ...userWithoutPassword } = userToLogin;
-      setUser(userWithoutPassword);
-      localStorage.setItem("caresync_user", JSON.stringify(userWithoutPassword));
-      return { success: true, user: userWithoutPassword };
+      // Add a flag to identify local users
+      const localUser = { ...userWithoutPassword, isLocalUser: true };
+      console.log("Setting user in context:", localUser);
+      setUser(localUser);
+      console.log("Storing user in localStorage");
+      localStorage.setItem("caresync_user", JSON.stringify(localUser));
+      console.log("User stored successfully");
+      return { success: true, user: localUser };
     } catch (error) {
       throw new Error(error.message);
     } finally {
@@ -150,10 +190,16 @@ export const AuthProvider = ({ children }) => {
       };
       addUser(newUser);
       setAllUsers((prev) => [...prev, newUser]);
-      const { password, confirmPassword, ...userWithoutPassword } = newUser;
-      setUser(userWithoutPassword);
-      localStorage.setItem("caresync_user", JSON.stringify(userWithoutPassword));
-      return { success: true, user: userWithoutPassword };
+      const {
+        password: _,
+        confirmPassword: __,
+        ...userWithoutPassword
+      } = newUser;
+      // Add a flag to identify local users
+      const localUser = { ...userWithoutPassword, isLocalUser: true };
+      setUser(localUser);
+      localStorage.setItem("caresync_user", JSON.stringify(localUser));
+      return { success: true, user: localUser };
     } catch (error) {
       throw new Error(error.message);
     } finally {
@@ -165,11 +211,24 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setLoading(true);
     try {
-      await signOutUser();
+      // Try Firebase logout first (only if it's a Firebase user)
+      if (user && !user.isLocalUser) {
+        try {
+          await signOutUser();
+        } catch {
+          // If Firebase logout fails, continue with local logout
+          console.log("Firebase logout failed, continuing with local logout");
+        }
+      }
+
+      // Clear local user state
       setUser(null);
       localStorage.removeItem("caresync_user");
+
+      return { success: true };
     } catch (error) {
       console.error("Logout failed:", error);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -185,9 +244,5 @@ export const AuthProvider = ({ children }) => {
     logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

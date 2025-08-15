@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   BellIcon,
   UserCircleIcon,
@@ -13,9 +13,18 @@ import { useTheme } from "../../contexts/ThemeContext";
 const Header = () => {
   const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
+  const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // Redirect to login page after successful logout
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      // Even if logout fails, redirect to login
+      navigate("/login");
+    }
   };
 
   const getRoleDisplay = (role) => {
@@ -37,10 +46,11 @@ const Header = () => {
     <header className="bg-surface border-subtle border-b shadow-sm">
       <div className="px-6 py-2">
         <div className="flex justify-between items-center">
-          <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-primary">
-              CareSync
-            </h1>
+          <div
+            className="flex items-center cursor-pointer"
+            onClick={() => navigate("/")}
+          >
+            <h1 className="text-2xl font-bold text-primary">CareSync</h1>
             <span className="ml-2 px-2 py-1 bg-primary-100/80 text-primary-800 text-xs rounded-full dark:bg-primary-900/30 dark:text-primary-200">
               Beta
             </span>

@@ -240,7 +240,7 @@ const HealthLogs = () => {
     <div className="space-y-6 px-4 md:px-0">
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <h2 className="text-2xl font-bold text-gray-900">Health Logs</h2>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Health Logs</h2>
         <div className="flex gap-3">
           <button
             onClick={() => openAddModal(activeTab === 'vitals' ? 'vital' : 'symptom')}
@@ -252,7 +252,7 @@ const HealthLogs = () => {
           {activeTab === 'vitals' && (
             <button
               onClick={exportCSV}
-              className="bg-gray-100 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-200"
+              className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
             >
               <ArrowDownTrayIcon className="h-5 w-5" />
               Export CSV
@@ -263,48 +263,48 @@ const HealthLogs = () => {
 
       {/* Summary cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <p className="text-sm text-gray-500">Total Logs</p>
-          <p className="text-lg font-semibold">{summary.total}</p>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Total Logs</p>
+          <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{summary.total}</p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <p className="text-sm text-gray-500">Abnormal Vitals</p>
-          <p className="text-lg font-semibold">{summary.abnormal}</p>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Abnormal Vitals</p>
+          <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{summary.abnormal}</p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <p className="text-sm text-gray-500">Last Log Date</p>
-          <p className="text-lg font-semibold">{summary.lastLog || '--'}</p>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Last Log Date</p>
+          <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{summary.lastLog || '--'}</p>
         </div>
-        <div className="bg-white p-4 rounded-lg shadow-sm border">
-          <p className="text-sm text-gray-500">Top Vital Type</p>
-          <p className="text-lg font-semibold">{summary.mostCommonType || '--'}</p>
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400">Top Vital Type</p>
+          <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{summary.mostCommonType || '--'}</p>
         </div>
       </div>
 
       {/* Type breakdown */}
-      <div className="bg-white p-4 rounded-lg shadow-sm border">
-        <h4 className="font-medium mb-3">Log Type Breakdown</h4>
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
+        <h4 className="font-medium mb-3 text-gray-900 dark:text-gray-100">Log Type Breakdown</h4>
         <div className="flex flex-wrap gap-2">
           {Object.entries(summary.typeCounts).length ? (
             Object.entries(summary.typeCounts).map(([type, count]) => (
-              <div key={type} className="px-3 py-2 bg-gray-50 rounded-lg border text-sm">
-                <span className="font-medium">{type}</span>
-                <span className="ml-2 text-xs text-gray-500">({count})</span>
+              <div key={type} className="px-3 py-2 bg-gray-50 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 text-sm">
+                <span className="font-medium text-gray-900 dark:text-gray-100">{type}</span>
+                <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">({count})</span>
               </div>
             ))
           ) : (
-            <div className="text-sm text-gray-500">No vitals recorded yet.</div>
+            <div className="text-sm text-gray-500 dark:text-gray-400">No vitals recorded yet.</div>
           )}
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200">
+      <div className="border-b border-gray-200 dark:border-gray-700">
         <nav className="-mb-px flex space-x-6 overflow-x-auto">
           <button
             onClick={() => setActiveTab('vitals')}
             className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
-              activeTab === 'vitals' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              activeTab === 'vitals' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
             }`}
           >
             Vital Signs
@@ -312,7 +312,7 @@ const HealthLogs = () => {
           <button
             onClick={() => setActiveTab('symptoms')}
             className={`py-2 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
-              activeTab === 'symptoms' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              activeTab === 'symptoms' ? 'border-blue-500 text-blue-600 dark:text-blue-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
             }`}
           >
             Symptoms
@@ -323,13 +323,13 @@ const HealthLogs = () => {
       {/* Filters row */}
       <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
         <div className="flex items-center gap-2">
-          <FunnelIcon className="h-5 w-5 text-gray-500" />
+          <FunnelIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
           {activeTab === 'vitals' ? (
-            <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border rounded-lg px-3 py-2 text-sm">
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
               {vitalTypes.map(t => <option key={t} value={t}>{t}</option>)}
             </select>
           ) : (
-            <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border rounded-lg px-3 py-2 text-sm">
+            <select value={filterType} onChange={e => setFilterType(e.target.value)} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100">
               <option value="all">All</option>
               <option value="mild">Mild</option>
               <option value="moderate">Moderate</option>
@@ -339,44 +339,48 @@ const HealthLogs = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="text-sm text-gray-500">From</label>
-          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} className="border rounded-lg px-2 py-2 text-sm" />
-          <label className="text-sm text-gray-500">To</label>
-          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} className="border rounded-lg px-2 py-2 text-sm" />
+          <label className="text-sm text-gray-500 dark:text-gray-400">From</label>
+          <input type="date" value={dateFrom} onChange={e => setDateFrom(e.target.value)} className="border border-gray-300 dark:border-gray-600 rounded-lg px-2 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
+          <label className="text-sm text-gray-500 dark:text-gray-400">To</label>
+          <input type="date" value={dateTo} onChange={e => setDateTo(e.target.value)} className="border border-gray-300 dark:border-gray-600 rounded-lg px-2 py-2 text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" />
         </div>
 
         <div className="flex items-center ml-auto">
-          <input type="search" placeholder="Search..." value={searchText} onChange={e => setSearchText(e.target.value)} className="border rounded-lg px-3 py-2 text-sm w-full md:w-64" />
+          <input type="search" placeholder="Search..." value={searchText} onChange={e => setSearchText(e.target.value)} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm w-full md:w-64 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400" />
         </div>
       </div>
 
       {/* Content container */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700">
         {activeTab === 'vitals' && (
           <div className="p-6 space-y-4">
-            {filteredVitals.length === 0 && <div className="text-center text-gray-500 py-8">No vitals match your filters.</div>}
+            {filteredVitals.length === 0 && <div className="text-center text-gray-500 dark:text-gray-400 py-8">No vitals match your filters.</div>}
             {filteredVitals.map((v) => (
-              <div key={v.id} className={`flex items-center justify-between p-4 rounded-lg ${v.status === 'high' ? 'bg-red-50' : v.status === 'low' ? 'bg-yellow-50' : 'bg-gray-50'}`}>
+              <div key={v.id} className={`flex items-center justify-between p-4 rounded-lg ${
+                v.status === 'high' ? 'bg-red-50 dark:bg-red-900/20' 
+                : v.status === 'low' ? 'bg-yellow-50 dark:bg-yellow-900/20' 
+                : 'bg-gray-50 dark:bg-gray-700'
+              }`}>
                 <div>
-                  <h4 className="font-medium text-gray-900">{v.type}</h4>
-                  <p className="text-sm text-gray-500">{v.date}</p>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{v.type}</h4>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{v.date}</p>
                 </div>
                 <div className="flex items-center gap-6">
-                  <p className="text-lg font-semibold">{v.value} {v.unit}</p>
+                  <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">{v.value} {v.unit}</p>
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    v.status === 'normal' ? 'bg-green-100 text-green-800'
-                    : v.status === 'high' ? 'bg-red-100 text-red-800'
-                    : v.status === 'low' ? 'bg-yellow-100 text-yellow-800'
-                    : 'bg-gray-100 text-gray-800'
+                    v.status === 'normal' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                    : v.status === 'high' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                    : v.status === 'low' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
+                    : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
                   }`}>
                     {v.status || 'unknown'}
                   </span>
                   <div className="flex gap-2">
-                    <button onClick={() => openEditModal('vital', v)} className="p-1 hover:bg-gray-200 rounded">
-                      <PencilSquareIcon className="h-5 w-5 text-gray-500" />
+                    <button onClick={() => openEditModal('vital', v)} className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors">
+                      <PencilSquareIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     </button>
-                    <button onClick={() => handleDelete('vital', v.id)} className="p-1 hover:bg-gray-200 rounded">
-                      <TrashIcon className="h-5 w-5 text-red-500" />
+                    <button onClick={() => handleDelete('vital', v.id)} className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors">
+                      <TrashIcon className="h-5 w-5 text-red-500 dark:text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -387,28 +391,28 @@ const HealthLogs = () => {
 
         {activeTab === 'symptoms' && (
           <div className="p-6 space-y-4">
-            {filteredSymptoms.length === 0 && <div className="text-center text-gray-500 py-8">No symptoms match your filters.</div>}
+            {filteredSymptoms.length === 0 && <div className="text-center text-gray-500 dark:text-gray-400 py-8">No symptoms match your filters.</div>}
             {filteredSymptoms.map((s) => (
-              <div key={s.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div key={s.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <div>
-                  <h4 className="font-medium text-gray-900">{s.symptom}</h4>
-                  <p className="text-sm text-gray-500">{s.date}</p>
-                  {s.notes && <p className="text-sm text-gray-400">{s.notes}</p>}
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">{s.symptom}</h4>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">{s.date}</p>
+                  {s.notes && <p className="text-sm text-gray-400 dark:text-gray-500">{s.notes}</p>}
                 </div>
                 <div className="flex items-center gap-6">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    s.severity === 'mild' ? 'bg-green-100 text-green-800'
-                    : s.severity === 'moderate' ? 'bg-yellow-100 text-yellow-800'
-                    : 'bg-red-100 text-red-800'
+                    s.severity === 'mild' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                    : s.severity === 'moderate' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
+                    : 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
                   }`}>
                     {s.severity}
                   </span>
                   <div className="flex gap-2">
-                    <button onClick={() => openEditModal('symptom', s)} className="p-1 hover:bg-gray-200 rounded">
-                      <PencilSquareIcon className="h-5 w-5 text-gray-500" />
+                    <button onClick={() => openEditModal('symptom', s)} className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors">
+                      <PencilSquareIcon className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                     </button>
-                    <button onClick={() => handleDelete('symptom', s.id)} className="p-1 hover:bg-gray-200 rounded">
-                      <TrashIcon className="h-5 w-5 text-red-500" />
+                    <button onClick={() => handleDelete('symptom', s.id)} className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded transition-colors">
+                      <TrashIcon className="h-5 w-5 text-red-500 dark:text-red-400" />
                     </button>
                   </div>
                 </div>
@@ -420,35 +424,35 @@ const HealthLogs = () => {
 
       {/* Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 z-50">
-          <div className="bg-white rounded-lg p-6 w-full max-w-lg">
-            <h3 className="text-lg font-semibold mb-4">{editing ? 'Edit Entry' : 'Add Entry'}</h3>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30 dark:bg-opacity-50 z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-lg shadow-xl">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">{editing ? 'Edit Entry' : 'Add Entry'}</h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
-                <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Date</label>
+                <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
               </div>
 
               {form.kind === 'vital' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                    <input type="text" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
+                    <input type="text" value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Value</label>
-                      <input type="text" value={form.value} onChange={e => setForm(f => ({ ...f, value: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" />
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Value</label>
+                      <input type="text" value={form.value} onChange={e => setForm(f => ({ ...f, value: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Unit</label>
-                      <input type="text" value={form.unit} onChange={e => setForm(f => ({ ...f, unit: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" />
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Unit</label>
+                      <input type="text" value={form.unit} onChange={e => setForm(f => ({ ...f, unit: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))} className="border rounded-lg px-3 py-2 w-full">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Status</label>
+                    <select value={form.status} onChange={e => setForm(f => ({ ...f, status: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                       <option value="auto">Auto-detect</option>
                       <option value="normal">Normal</option>
                       <option value="high">High</option>
@@ -462,27 +466,27 @@ const HealthLogs = () => {
               {form.kind === 'symptom' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Symptom</label>
-                    <input type="text" value={form.symptom} onChange={e => setForm(f => ({ ...f, symptom: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Symptom</label>
+                    <input type="text" value={form.symptom} onChange={e => setForm(f => ({ ...f, symptom: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Severity</label>
-                    <select value={form.severity} onChange={e => setForm(f => ({ ...f, severity: e.target.value }))} className="border rounded-lg px-3 py-2 w-full">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Severity</label>
+                    <select value={form.severity} onChange={e => setForm(f => ({ ...f, severity: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100">
                       <option value="mild">Mild</option>
                       <option value="moderate">Moderate</option>
                       <option value="severe">Severe</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
-                    <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} className="border rounded-lg px-3 py-2 w-full" rows="3" />
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Notes</label>
+                    <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} className="border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100" rows="3" />
                   </div>
                 </>
               )}
             </div>
 
             <div className="mt-6 flex justify-end gap-3">
-              <button onClick={closeModal} className="px-4 py-2 border rounded-lg">Cancel</button>
+              <button onClick={closeModal} className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">Cancel</button>
               <button onClick={handleSave} className="btn-primary">Save</button>
             </div>
           </div>
